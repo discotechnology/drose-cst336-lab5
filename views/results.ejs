@@ -1,18 +1,23 @@
 <%- include("partials/head.ejs") %>
+<%- include("partials/header.ejs") %>
 
 <body>
 
-    <h1> Quotes Found </h1>
-    
-    <% for (i of quotes) { %>
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="quotes">
+                <% for (i of quotes) { %>
 
-        <div>
-            <%= i.quote %><br>
-            - <em><a href="#" id="<%= i.authorId %>"><%= i.firstName %> <%= i.lastName %></a></em>
-            <br><br>
+                    <div>
+                        <%= i.quote %><br>
+                        - <em><a href="#" id="<%= i.authorId %>"><%= i.firstName %> <%= i.lastName %></a></em>
+                        <br><br>
+                    </div>
+
+                <% } %>
+            </div>
         </div>
-
-    <% } %>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="authorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

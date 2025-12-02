@@ -1,43 +1,46 @@
 <%- include("partials/head.ejs") %>
+<%- include("partials/header.ejs") %>
 
 <body>
-
-    <h1> Quote Finder </h1>
-    <form action="/searchByKeyword">
-        Keyword: 
-        <input type="text" name="keyword">
-        <button>Search by Keyword</button>
-    </form>
-    <br>
-    <form action="/searchByAuthor">
-        <select name="authorId">
-            <% for (i of authors) { %>
-                <option value="<%= i.authorId %>">
-                    <%= i.firstName %> <%= i.lastName %>
-                </option>
-            <% } %>
-        </select>
-        <button>Search by Author</button>
-   </form>
-   <br>
-   <form action="/searchByCategory">
-        <select name="category">
-            <% for (i of categories) { %>
-                <option value="<%= i.category %>">
-                    <%= i.category %>
-                </option>
-            <% } %>
-        </select>
-        <button>Search by Category</button>
-    </form>
-    <br>
-    <form action="/searchByLikes">
-        Likes (min, max):
-        <input class="col-xs-1" type="number" name="minLikes">
-        <input class="col-xs-1" type="number" name="maxLikes">
-        <button>Search by Likes</button>
-    </form>
-
+    <div class="content-wrapper">
+        <div class="content">
+            <div>
+                <form action="/searchByKeyword">
+                    Keyword: 
+                    <input type="text" name="keyword">
+                    <button class="btn btn-primary">Search by Keyword</button>
+                </form>
+                <form action="/searchByAuthor">
+                    <select name="authorId">
+                        <% for (i of authors) { %>
+                            <option value="<%= i.authorId %>">
+                                <%= i.firstName %> <%= i.lastName %>
+                            </option>
+                        <% } %>
+                    </select>
+                    <button class="btn btn-primary">Search by Author</button>
+                </form>
+            </div>
+            <div>
+                <form action="/searchByCategory">
+                    <select name="category">
+                        <% for (i of categories) { %>
+                            <option value="<%= i.category %>">
+                                <%= i.category %>
+                            </option>
+                        <% } %>
+                    </select>
+                    <button class="btn btn-primary">Search by Category</button>
+                </form>
+                <form action="/searchByLikes">
+                    Likes (min, max):
+                    <input class="col-xs-1" type="number" name="minLikes">
+                    <input class="col-xs-1" type="number" name="maxLikes">
+                    <button class="btn btn-primary"> Search by Likes</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <%- include("partials/footer.ejs") %>
 </body>
 </html>
