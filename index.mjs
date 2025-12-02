@@ -21,11 +21,17 @@ const pool = mysql.createPool({
 
 //routes
 app.get('/', async (req, res) => {
-    let sql = `SELECT authorId, firstName, lastName 
+    let authorQuery = `SELECT authorId, firstName, lastName 
                 FROM q_authors 
                 ORDER BY lastName`;
-    const [rows] = await pool.query(sql);
-    res.render('index',{authors: rows});
+    const [authorRows] = await pool.query(authorQuery);
+
+    let categoryQuery = `SELECT DISTINCT category 
+                FROM q_quotes 
+                ORDER BY category`;
+    const [categoryRows] = await pool.query(categoryQuery);
+
+    res.render('index',{authors: authorRows, categories: categoryRows});
 });
 
 app.get('/searchByKeyword', async (req, res) => {
@@ -52,6 +58,16 @@ app.get('/searchByAuthor', async (req, res) => {
     res.render('results', {quotes: rows});
 });
 
+app.get('/searchByCategory', async (req, res) => {
+    let userCategory = req.query.category;
+    let sql = `SELECT authorId, firstName, lastName, quote
+                FROM q_quotes
+                JOIN q_authors USING (authorId)
+                WHERE category = ?`;
+    let params = [userCategory];
+    const [rows] = await pool.query(sql, params);
+    res.render('results', {quotes: rows});
+});
 app.get('/api/author/:authorId', async (req, res) => {
     let authorId = req.params.authorId;
     let sql = `SELECT *

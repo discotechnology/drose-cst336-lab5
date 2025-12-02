@@ -19,7 +19,17 @@
         </select>
         <button>Search by Author</button>
    </form>
-
+   <br>
+   <form action="/searchByCategory">
+        <select name="category">
+            <% for (i of categories) { %>
+                <option value="<%= i.category %>">
+                    <%= i.category %>
+                </option>
+            <% } %>
+        </select>
+        <button>Search by Category</button>
+    </form>
 
     <%- include("partials/footer.ejs") %>
 </body>
