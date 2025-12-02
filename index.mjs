@@ -52,6 +52,15 @@ app.get('/searchByAuthor', async (req, res) => {
     res.render('results', {quotes: rows});
 });
 
+app.get('/api/author/:authorId', async (req, res) => {
+    let authorId = req.params.authorId;
+    let sql = `SELECT *
+                FROM q_authors
+                WHERE authorId = ?`;
+    let [rows] = await pool.query(sql, [authorId]);
+    res.send(rows);
+});
+
 app.get("/dbTest", async(req, res) => {
    try {
         const [rows] = await pool.query(

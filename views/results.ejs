@@ -7,13 +7,16 @@
     <% for (i of quotes) { %>
 
         <div>
-            <strong><%= i.quote %></strong> <br>
-            - <em><%= i.firstName %> <%= i.lastName %></em>
+            <%= i.quote %><br>
+            - <em><a href="#" id="<%= i.authorId %>"><%= i.firstName %> <%= i.lastName %></a></em>
             <br><br>
         </div>
 
     <% } %>
 
+    <div id="authorInfo"></div>
+
     <%- include("partials/footer.ejs") %>
+    <script src="/js/script.js"></script>
 </body>
 </html>
