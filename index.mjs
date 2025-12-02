@@ -20,8 +20,12 @@ const pool = mysql.createPool({
 });
 
 //routes
-app.get('/', (req, res) => {
-   res.render('index');
+app.get('/', async (req, res) => {
+    let sql = `SELECT authorId, firstName, lastName 
+                FROM q_authors 
+                ORDER BY lastName`;
+    const [rows] = await pool.query(sql);
+    res.render('index',{authors: rows});
 });
 
 app.get('/searchByKeyword', async (req, res) => {
@@ -33,6 +37,18 @@ app.get('/searchByKeyword', async (req, res) => {
     let params = [`%${userKeyword}%`];
     const [rows] = await pool.query(sql, params);
     console.log("User keyword: " + userKeyword);
+    res.render('results', {quotes: rows});
+});
+
+app.get('/searchByAuthor', async (req, res) => {
+    let userAuthorId = req.query.authorId;
+    let sql = `SELECT authorId, firstName, lastName, quote
+                FROM q_quotes
+                JOIN q_authors USING (authorId)
+                WHERE authorId = ?`;
+    let params = [userAuthorId];
+    const [rows] = await pool.query(sql, params);
+    console.log("User author ID: " + userAuthorId);
     res.render('results', {quotes: rows});
 });
 
