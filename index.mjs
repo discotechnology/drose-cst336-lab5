@@ -68,6 +68,19 @@ app.get('/searchByCategory', async (req, res) => {
     const [rows] = await pool.query(sql, params);
     res.render('results', {quotes: rows});
 });
+
+app.get('/searchByLikes', async (req, res) => {
+    let minLikes = req.query.minLikes;
+    let maxLikes = req.query.maxLikes;
+    let sql = `SELECT authorId, firstName, lastName, quote
+                FROM q_quotes
+                JOIN q_authors USING (authorId)
+                WHERE likes BETWEEN ? AND ?`;
+    let params = [minLikes, maxLikes];
+    const [rows] = await pool.query(sql, params);
+    res.render('results', {quotes: rows});
+});
+
 app.get('/api/author/:authorId', async (req, res) => {
     let authorId = req.params.authorId;
     let sql = `SELECT *
