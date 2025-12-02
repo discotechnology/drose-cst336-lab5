@@ -24,6 +24,18 @@ app.get('/', (req, res) => {
    res.render('index');
 });
 
+app.get('/searchByKeyword', async (req, res) => {
+    let userKeyword = req.query.keyword;
+    let sql = `SELECT authorId, firstName, lastName, quote
+               FROM q_quotes
+               JOIN q_authors USING (authorId)
+               WHERE quote LIKE ?`;
+    let params = [`%${userKeyword}%`];
+    const [rows] = await pool.query(sql, params);
+    console.log("User keyword: " + userKeyword);
+    res.send(rows);
+})
+
 app.get("/dbTest", async(req, res) => {
    try {
         const [rows] = await pool.query(
