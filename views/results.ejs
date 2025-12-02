@@ -1,0 +1,19 @@
+<%- include("partials/head.ejs") %>
+
+<body>
+
+    <h1> Quotes Found </h1>
+    
+    <% for (i of quotes) { %>
+
+        <div>
+            <strong><%= i.quote %></strong> <br>
+            - <em><%= i.firstName %> <%= i.lastName %></em>
+            <br><br>
+        </div>
+
+    <% } %>
+
+    <%- include("partials/footer.ejs") %>
+</body>
+</html>

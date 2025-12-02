@@ -33,8 +33,8 @@ app.get('/searchByKeyword', async (req, res) => {
     let params = [`%${userKeyword}%`];
     const [rows] = await pool.query(sql, params);
     console.log("User keyword: " + userKeyword);
-    res.send(rows);
-})
+    res.render('results', {quotes: rows});
+});
 
 app.get("/dbTest", async(req, res) => {
    try {
